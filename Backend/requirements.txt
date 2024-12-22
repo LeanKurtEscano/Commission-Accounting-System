@@ -1,0 +1,7 @@
+Django
+django-cors-headers
+djangorestframework
+djangorestframework-simplejwt
+psycopg2-binary
+dj-database-url
+python-dotenv
