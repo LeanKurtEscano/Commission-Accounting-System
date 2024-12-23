@@ -22,7 +22,7 @@ const Login: React.FC = () => {
     setShow(!show);
   };
 
-  
+
 
   useEffect(() => {
     if(isAuthenticated){
@@ -52,7 +52,7 @@ const Login: React.FC = () => {
         localStorage.setItem("access_token", response.data.access);
         localStorage.setItem("refresh_token", response.data.refresh);
         setIsAuthenticated(true);
-        navigate('/dashboard/weekly');
+        navigate('/dashboard/analytics');
         
       }
 
@@ -81,10 +81,10 @@ const Login: React.FC = () => {
 
   return (
     <section className='h-screen w-full flex bg-darkbg justify-center items-center'>
-      <div className='flex flex-col p-6 border-formcolor bg-loginbg border-2 rounded-lg shadow-xl w-96'>
+      <div className='flex flex-col p-6 border-cardbg bg-cardbg border-2 rounded-lg shadow-xl w-96'>
        
-        <h2 className='text-2xl font-semibold text-center text-cyan-500'>
-          Log in
+        <h2 className='text-2xl font-semibold text-center text-textHeading'>
+          Welcome Admin
         </h2>
         <form className='flex flex-col' onSubmit={loginSubmit}>
           <div className='mb-4'>
@@ -99,7 +99,7 @@ const Login: React.FC = () => {
               placeholder='Enter your email'
             />
             {userError && (
-              <div>
+              <div className='flex flex-row'>
                 <p className='text-red-600'>{userError}</p>
               </div>
             )}
@@ -136,7 +136,8 @@ const Login: React.FC = () => {
 
           <button
             type='submit'
-            className='bg-gradient-to-r from-cyan-500 to-blue-500 mt-2 text-white rounded p-2 hover:bg-blue-600 transition duration-300 flex justify-center items-center'
+            className='bg-textHeading mt-2 text-white rounded p-2 flex justify-center items-center transform hover:scale-105 hover:bg-gradient-to-r  transition duration-500 ease-in-out'
+
             disabled={loading}
           >
             {loading ? (

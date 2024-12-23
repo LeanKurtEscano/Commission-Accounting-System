@@ -8,8 +8,11 @@ import Navbar from './layouts/Navbar'
 import Login from './sections/Login';
 import ProtectedRoutes from './protected/ProtectedRoutes';
 import Dashboard from './sections/Dashboard';
-import Weekly from './sections/Weekly';
-import LogOut from './components/Logout';
+import Entry from './sections/Entry';
+import Summary from './sections/Summary';
+import LogOut from './components/LogOut';
+import Analytics from './sections/Analytics';
+import CreateAgent from './sections/CreateAgent';
 function App() {
   return (
     <MyProvider>
@@ -36,7 +39,7 @@ const Main = () => {
     if (savedPath) {
       navigate(savedPath);
     } else if (isAuthenticated && location.pathname === '/') {
-      navigate('/dashboard/weekly');
+      navigate('/dashboard/analytics');
     }
   }, []);
 
@@ -60,7 +63,10 @@ const Main = () => {
             </ProtectedRoutes>
           }
         >
-          <Route path="weekly" element={<Weekly />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="entry" element={<Entry />} />
+          <Route path="create-agent" element = {<CreateAgent />} />
+          <Route path="tracking" element={<Summary />} />
 
         </Route>
 

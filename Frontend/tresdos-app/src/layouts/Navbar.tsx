@@ -22,28 +22,28 @@ const Navbar = () => {
 
     const handleLogin = () => {
         setToggle(false);
-        navigate('/');
+        
     };
 
 
     return (
-        <header className='bg-navcolor'>
-            <nav className="flex items-center justify-end bg-darkbg transition-all duration-700 w-full shadow-xl pt-4 pb-4 pr-36">
+        <header className='bg-navbg'>
+            <nav className="flex items-center justify-end bg-navbg transition-all duration-700 w-full shadow-xl pt-4 pb-4 pr-36">
                 <div className='mr-8 absolute left-24'>
-                    <Link to='/'>
+                    <Link to='/dashboard/analytics'>
                         <h1 className="text-slate-200 text-xl font-bold">
                            Tresdos
                         </h1>
 
                     </Link>
                 </div>
-                <div className={`nav-links duration-500 md:static p-4 absolute bg-darkbg md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto w-full flex items-center px-5 ${toggle ? 'top-0' : ''}`}>
+                <div className={`nav-links duration-500 md:static p-4 absolute bg-navbg md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto w-full flex items-center px-5 ${toggle ? 'top-0' : ''}`}>
                     <ul className="flex md:flex-row md:items-center md:gap-[4vw] gap-8">
                         {navItems.map((item) => (
                             <li className='relative group font-normal' key={item.text}>
                                 <Link to={item.link} className="text-white font-bold mb-1" onClick={() => setToggle(false)}>
                                     {item.text}
-                                    <span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-[2px] mt-2 bg-cyan-500 transition-all duration-300 group-hover:w-full"></span>
+                                    <span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-[2px] mt-2 bg-textHeading transition-all duration-300 group-hover:w-full"></span>
                                 </Link>
                             </li>
                         ))}
@@ -54,14 +54,14 @@ const Navbar = () => {
                             <li className='relative group font-normal' onClick={toggleLogOut}>
                                 <Link to='#' className="text-white font-bold">
                                     Logout
-                                    <span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-[2px] bg-cyan-500 transition-all duration-300 group-hover:w-full"></span>
+                                    <span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-[2px] bg-textHeading transition-all duration-300 group-hover:w-full"></span>
                                 </Link>
                             </li>
                         ) : (
                             <li className='relative group font-normal'>
                                 <div className="text-white font-bold cursor-pointer" onClick={handleLogin}>
                                     Login
-                                    <span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-[2px] bg-cyan-500 transition-all duration-300 group-hover:w-full"></span>
+                                    <span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-[2px] bg-textHeading transition-all duration-300 group-hover:w-full"></span>
                                 </div>
                             </li>
                         )}

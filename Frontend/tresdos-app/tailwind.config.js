@@ -12,19 +12,20 @@ export default {
         customPurple3:'#8826E4',
         navcolor: "#050a0d",
         customtext:'#1DB6C1',
-        darkbg:"#091216",
-        darkpurple:"#9171f8",
+       
+       
         inputcolor: "#3f3f3f",
         inputtext: "#717171",
-        formcolor: "#282828",
-        formhover: "#4C4A4A",
-        darktext: "#ba9ffb",
-        darktext2: "#8b8b8b",
-        darktext3: "#C9C9C9",
-        buttonbg: '#1DB6C1',
-        googlebg: '#828592',
-        loginbg: "#0e1b21",
-          // 8826E4
+
+        darkbg:"#121212",
+        textHeading : "#8A6ED6",
+        navbg: "#1e1f22",
+        cardbg: "#282828",
+        
+       
+
+          //8A6ED6
+          // A383FB
       }
     },
   },

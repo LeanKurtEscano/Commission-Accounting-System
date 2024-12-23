@@ -30,8 +30,8 @@ const LogOut:React.FC = () => {
     };
 
     return (
-        <div className='fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50'>
-            <div className='bg-darkbg p-6 rounded-lg border border-cyan-600 max-w-sm w-full'>
+        <div className='fixed inset-0 bg-darkbg bg-opacity-75 flex items-center justify-center z-50'>
+            <div className='bg-cardbg p-6 rounded-lg border-darkbg max-w-sm w-full'>
                 <h2 className='text-red-600 mb-4 text-lg md:text-xl'>Are you sure?</h2>
                 <p className='text-slate-200 mb-4'>Do you really want to Logout?</p>
                 <div className='flex justify-end'>

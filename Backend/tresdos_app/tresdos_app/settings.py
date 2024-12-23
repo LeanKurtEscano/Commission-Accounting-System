@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'tresdos_auth'
+    'tresdos_auth',
+    'tresdos_agents'
 ]
 
 MIDDLEWARE = [

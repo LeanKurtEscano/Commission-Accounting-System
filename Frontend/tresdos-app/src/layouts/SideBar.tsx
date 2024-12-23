@@ -17,16 +17,22 @@ const SideBar: React.FC = () => {
   const {userDetails,setToggleLog } = useMyContext();
 
   const toUserProfile = () => {
-    navigate('/dashboard/profile');
-    setActiveIndex(3);
+    navigate('/dashboard/analytics');
+    setActiveIndex(0);
   }
 
 
 
 
   const handleMenuClick = (index: number) => {
+    
     if (index === 4) {
-      setToggleLog(true);
+      const savedPath = localStorage.getItem('currentPath');
+      if (savedPath) {
+        navigate(savedPath);
+        setToggleLog(true);
+      }
+     
     } else {
       setActiveIndex(index);
     }
@@ -39,13 +45,13 @@ const SideBar: React.FC = () => {
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-full transition-all duration-700 z-10 bg-loginbg shadow-sm
+      className={`fixed top-0 left-0 h-full transition-all duration-700 z-10 bg-cardbg shadow-sm
     ${toggle ? 'w-16' : 'w-64'}`}
     >
 
       <div className='flex justify-center align-center absolute pl-3 pt-4'>
         <button onClick={showSideBar} className='w-4'>
-          <FontAwesomeIcon icon={toggle ? faBars : faTimes} className='text-cyan-400' />
+          <FontAwesomeIcon icon={toggle ? faBars : faTimes} className='text-textHeading' />
         </button>
       </div>
 
@@ -71,7 +77,7 @@ const SideBar: React.FC = () => {
             key={index}
             onClick={() => handleMenuClick(index)}
             className={`flex flex-row items-center w-full h-11 p-4 mb-3 transition-all duration-500 rounded-full 
-          ${activeIndex === index ? 'bg-cyan-500 text-cyan-500' : 'hover:bg-cyan-500 hover:text-white group'}
+          ${activeIndex === index ? 'bg-textHeading text-textHeading' : 'hover:bg-textHeading hover:text-white group'}
           ${toggle ? 'w-full h-11 pr-8' : ''}`}
           >
 
@@ -80,7 +86,7 @@ const SideBar: React.FC = () => {
                 <FontAwesomeIcon
                   icon={item.icon}
                   className={`transition-colors duration-300 
-              ${activeIndex === index ? 'text-white' : 'text-cyan-500 group-hover:text-white'}`}
+              ${activeIndex === index ? 'text-white' : 'text-textHeading group-hover:text-white'}`}
                 />
               </Link>
             </div>
@@ -88,7 +94,7 @@ const SideBar: React.FC = () => {
             <div className={`flex justify-center items-center w-full pr-5 overflow-hidden  
            ${toggle ? 'max-w-0 opacity-0' : 'max-w-full opacity-100'}`}>
               <p className={`pl-4 duration-500 whitespace-nowrap transition-opacity
-            ${activeIndex === index ? 'text-white' : 'text-cyan-500 group-hover:text-white'}`}
+            ${activeIndex === index ? 'text-white' : 'text-textHeading group-hover:text-white'}`}
               >
                 <Link to={item.url ?? "/"}>{item.text}</Link>
               </p>
