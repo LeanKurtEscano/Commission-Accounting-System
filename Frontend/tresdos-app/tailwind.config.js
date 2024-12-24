@@ -21,6 +21,9 @@ export default {
         textHeading : "#8A6ED6",
         navbg: "#1e1f22",
         cardbg: "#282828",
+        layer1: "#221e22",
+        layer2: "#373337",
+        layer3: "#3f3f3f",
         
        
 

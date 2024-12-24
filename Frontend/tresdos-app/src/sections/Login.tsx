@@ -96,7 +96,7 @@ const Login: React.FC = () => {
               id='username'
               className='border border-inputcolor text-slate-300 placeholder:text-inputtext rounded p-2 w-full bg-inputcolor hover:bg-inputcolor focus:bg-inputcolor focus:ring-0 focus:border-inputcolor transition duration-300'
               autoComplete='off'
-              placeholder='Enter your email'
+              placeholder='Enter your username'
             />
             {userError && (
               <div className='flex flex-row'>

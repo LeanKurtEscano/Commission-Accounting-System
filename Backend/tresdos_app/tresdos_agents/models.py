@@ -14,6 +14,7 @@ class HeadAgent(models.Model):
 class MidAgent(models.Model):
     name = models.CharField(max_length=100)
     percentage = models.IntegerField()
+    parent_percentage = models.IntegerField(default=0)
     role = models.CharField(max_length=50, default='mid_agent')
     head_agent = models.ForeignKey(HeadAgent, on_delete=models.CASCADE)
 
@@ -24,6 +25,7 @@ class MidAgent(models.Model):
 class BaseAgent(models.Model):
     name = models.CharField(max_length=100)
     percentage = models.IntegerField()
+    parent_percentage = models.IntegerField(default=0)
     role = models.CharField(max_length=50, default='base_agent')
     head_agent = models.ForeignKey(HeadAgent, on_delete=models.CASCADE)
     mid_agent = models.ForeignKey(MidAgent, on_delete=models.CASCADE)

@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: white; /* Text color for the input */
+    padding-right: 2.5rem; /* Space for the icon */
+  }
+
+  /* Add a custom calendar icon */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Makes the calendar icon white */
+    cursor: pointer;
+  }
+
+  input[type="date"]::-moz-calendar-picker-indicator {
+    filter: invert(1); /* Makes the calendar icon white for Firefox */
+    cursor: pointer;
+  }
 
 
 @keyframes slide-in {

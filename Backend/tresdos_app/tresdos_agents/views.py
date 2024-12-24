@@ -50,7 +50,8 @@ def create_agents(request):
         percentage = request.data.get("percentage")
         assigned_head = request.data.get("assignedHeadAgent")
         assigned_middle = request.data.get("assignedMiddleAgent")
-        
+        parent_head = request.data.get("parentHeadAgentPercentage")          
+        parent_mid = request.data.get("parentMidAgentPercentage")                 
         
       
         if agent_type == "Head Agent":
@@ -62,21 +63,23 @@ def create_agents(request):
             if not assigned_head:
                 return Response({"error": "A Mid Agent must be associated with a Head Agent"}, status=status.HTTP_400_BAD_REQUEST)
             int_assigned_head = int(assigned_head)
+            int_parent_head = int(parent_head)
             head_agent = HeadAgent.objects.get(id=int_assigned_head)  # Get the associated HeadAgent
-            mid_agent = MidAgent.objects.create(name=agent_name, percentage=percentage, head_agent=head_agent)
+            mid_agent = MidAgent.objects.create(name=agent_name, percentage=percentage, head_agent=head_agent,parent_percentage = int_parent_head)
             return Response({"success": f"Mid Agent {mid_agent.name} created, assigned to {head_agent.name}"}, status=status.HTTP_201_CREATED)
         
        
         elif agent_type == "Base Agent":
-            if not assigned_head or not assigned_middle:
+            if not assigned_middle:
                 return Response({"error": " A Base Agent must be associated with a Mid Agent"}, status=status.HTTP_400_BAD_REQUEST)
-            int_assigned_mid = int(assigned_middle)      
+            int_assigned_mid = int(assigned_middle)
+            int_parent_mid = int(parent_mid)      
               
             
             mid_agent = MidAgent.objects.get(id=int_assigned_mid)
             head_agent = mid_agent.head_agent  
             
-            base_agent = BaseAgent.objects.create(name=agent_name, percentage=percentage, head_agent=head_agent, mid_agent=mid_agent)
+            base_agent = BaseAgent.objects.create(name=agent_name, percentage=percentage, head_agent=head_agent, mid_agent=mid_agent, parent_percentage = int_parent_mid)
             return Response({"success": f"Base Agent {base_agent.name} created, assigned to Head Agent {head_agent.name} and Mid Agent {mid_agent.name}"}, status=status.HTTP_201_CREATED)
 
         return Response({"error": "Invalid agent type"}, status=status.HTTP_400_BAD_REQUEST)

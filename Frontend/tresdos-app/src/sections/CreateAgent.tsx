@@ -9,12 +9,14 @@ interface AgentProfile {
     percentage: number;
     assignedHeadAgent?: number;
     assignedMiddleAgent?: number;
+    parentMidAgentPercentage?: number;
+    parentHeadAgentPercentage?: number;
 }
 
 type fieldErrors = {
     agentError: string;
     commissionError: string;
-} 
+}
 
 type Agent = {
     id: number;
@@ -25,7 +27,7 @@ type Agent = {
 const CreateAgent: React.FC = () => {
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [toggleCreate, setToggleCreate] = useState(false);
-    const [fieldErrors , setFieldErrors] = useState<fieldErrors>({
+    const [fieldErrors, setFieldErrors] = useState<fieldErrors>({
         agentError: "",
         commissionError: "",
     });
@@ -34,13 +36,14 @@ const CreateAgent: React.FC = () => {
     const [error, setError] = useState("")
     const [showHeadAgents, setShowHeadAgents] = useState(false);
     const [showMidAgents, setShowMidAgents] = useState(false);
-
     const [formData, setFormData] = useState<AgentProfile>({
         agentName: '',
         agentType: '',
         percentage: 0,
         assignedHeadAgent: undefined,
         assignedMiddleAgent: undefined,
+        parentMidAgentPercentage: undefined,
+        parentHeadAgentPercentage: undefined,
     });
 
     const navigate = useNavigate();
@@ -77,15 +80,15 @@ const CreateAgent: React.FC = () => {
 
 
         const agentNameError = validateAgentName(formData.agentName);
-        
+
         if (agentNameError) {
             setFieldErrors(prev => ({
-                ...prev,          
-                agentError: agentNameError  
+                ...prev,
+                agentError: agentNameError
             }));
         }
-        
-      
+
+
         try {
             const response = await createAgents(formData);
             if (response.status === 201) {
@@ -217,6 +220,24 @@ const CreateAgent: React.FC = () => {
                                 </div>
                             )}
                         </div>
+
+                    )}
+
+                    {showHeadAgents && (
+                        <div>
+                            <label htmlFor="parentHeadAgentPercentage" className="block text-slate-100 text-sm font-medium">
+                               Parent Agent Percentage
+                            </label>
+                            <input
+                                id="parentHeadAgentPercentage"
+                                name="parentHeadAgentPercentage"
+                                type="number"
+                                value={formData.parentHeadAgentPercentage}
+                                onChange={handleChange}
+                                className="mt-1 p-2 border rounded w-full border-inputcolor text-slate-300 placeholder:text-inputtext bg-inputcolor"
+                            />
+                        </div>
+
                     )}
 
                     {showMidAgents && (
@@ -244,6 +265,25 @@ const CreateAgent: React.FC = () => {
                             )}
                         </div>
                     )}
+
+
+                    {showMidAgents && (
+                        <div>
+                            <label htmlFor="parentMidAgentPercentage" className="block text-slate-100 text-sm font-medium">
+                               Parent Agent Percentage
+                            </label>
+                            <input
+                                id="parentMidAgentPercentage"
+                                name="parentMidAgentPercentage"
+                                type="number"
+                                value={formData.parentMidAgentPercentage}
+                                onChange={handleChange}
+                                className="mt-1 p-2 border rounded w-full border-inputcolor text-slate-300 placeholder:text-inputtext bg-inputcolor"
+                            />
+                        </div>
+
+                    )}
+
 
                     <div>
                         <label htmlFor="percentage" className="block text-slate-100 text-sm font-medium">
