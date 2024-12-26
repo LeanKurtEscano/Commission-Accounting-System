@@ -1,5 +1,17 @@
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+export const sendEmail = async(email:string) => {
+    const response = await axios.post(`${apiUrl}/email`, {
+        email:email
+    }, {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+
+    return response
+}
 export const logOut  = async(url:string) => {
     const accessToken = localStorage.getItem("access_token");
     const response = await axios.post(`${url}/logout/`,{}, {

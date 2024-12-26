@@ -23,7 +23,9 @@ const Login: React.FC = () => {
   };
 
 
-
+  const goToEmail = () => {
+    navigate('/email');
+  }
   useEffect(() => {
     if(isAuthenticated){
         navigate('/dashboard/weekly');
@@ -132,6 +134,9 @@ const Login: React.FC = () => {
 
            
           </div>
+          <div onClick={goToEmail}className='flex items-end justify-end pr-2'>
+            <p className='text-textHeading cursor-pointer '>Forgot Password?</p>
+          </div>
 
 
           <button
@@ -158,6 +163,7 @@ const Login: React.FC = () => {
               'Log in'
             )}
           </button>
+        
         </form>
        
       </div>

@@ -1,5 +1,5 @@
 
-from .models import HeadAgent, MidAgent,BaseAgent
+from tresdos_agents.models import HeadAgent, MidAgent,BaseAgent
 def agents_to_json():
    
     head_agents = list(HeadAgent.objects.all().values('id', 'name', 'percentage', 'role'))

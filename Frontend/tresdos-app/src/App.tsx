@@ -13,6 +13,7 @@ import Summary from './sections/Summary';
 import LogOut from './components/LogOut';
 import Analytics from './sections/Analytics';
 import CreateAgent from './sections/CreateAgent';
+import Email from './sections/Email';
 function App() {
   return (
     <MyProvider>
@@ -49,6 +50,7 @@ const Main = () => {
 
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/email" element={<Email />} />
 
         <Route
           path="/dashboard/*"

@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import MidAgent, HeadAgent, BaseAgent
-from .agents_json import agents_to_json
+from .agents.agents_json import agents_to_json
 
 
 
