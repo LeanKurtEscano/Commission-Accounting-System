@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import MidAgent, HeadAgent, BaseAgent
-
+from .agents_json import agents_to_json
 
 
 @api_view(["POST"])
@@ -38,6 +38,11 @@ def get_agents(request):
         return Response({"error": "An unexpected error occurred"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def display_agents(request):
+    json_data = agents_to_json()
+    return Response(json_data, status= status.HTTP_200_OK)
 
 
 

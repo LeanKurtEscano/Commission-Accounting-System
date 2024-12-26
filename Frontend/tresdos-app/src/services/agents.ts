@@ -38,3 +38,42 @@ export const createAgents = async(formData : UserProfile) => {
 
     return response
 }
+
+interface BaseAgent {
+    id: number;
+    name: string;
+    percentage: number; 
+    parent_percentage: number; 
+    role: string; 
+    head_agent: number; 
+    mid_agent: number; 
+  }
+  
+  interface MiddleAgent {
+    id: number;
+    name: string;
+    percentage: number; 
+    parent_percentage: number; 
+    role: string; 
+    head_agent: number;
+    baseAgents?: BaseAgent[]; 
+  }
+  
+  export interface AgentData {
+    id: number;
+    name: string;
+    percentage: number; 
+    role: string; 
+    middleAgents?: MiddleAgent[]; 
+  }
+
+export const getAgentsJson = async() => {
+    const accessToken = localStorage.getItem("access_token");
+    const response = await axios.get(`${apiUrl2}/agents/display/`,{
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    })
+
+    return response
+}
