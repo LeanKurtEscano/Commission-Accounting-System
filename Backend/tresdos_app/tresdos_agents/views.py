@@ -10,6 +10,19 @@ from .models import MidAgent, HeadAgent, BaseAgent
 from .agents_json import agents_to_json
 
 
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def make_report(request):
+    form_data = request.data.get("formData")
+    report_date = request.data.get("reportDate")
+   
+    print(form_data)
+    print(report_date)
+    
+    return Response({"success": "Recieved"}, status=status.HTTP_200_OK)
+
+
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def get_agents(request):

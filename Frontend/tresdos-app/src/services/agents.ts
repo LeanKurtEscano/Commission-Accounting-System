@@ -67,6 +67,27 @@ interface BaseAgent {
     middleAgents?: MiddleAgent[]; 
   }
 
+  interface ReportDate {
+    startDate : string;
+    endDate: string;
+  }
+
+export const makeReport = async(formData:any,reportDate: ReportDate) => {
+    const accessToken = localStorage.getItem("access_token");
+    const response = await axios.post(`${apiUrl2}/agents/report/`,{
+        formData: formData,
+        reportDate: reportDate,
+    }, {
+        headers : {
+           'Authorization' : `Bearer ${accessToken}`
+        }
+        
+    })
+
+    return response
+
+}
+
 export const getAgentsJson = async() => {
     const accessToken = localStorage.getItem("access_token");
     const response = await axios.get(`${apiUrl2}/agents/display/`,{

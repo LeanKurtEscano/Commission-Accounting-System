@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
+import { sortAgentsByName } from "../utils/sortAgents";
 import { getAgentsJson, AgentData } from "../services/agents";
-
-
+import { handleKeyDown } from "../utils/keyFunction";
+import { makeReport } from "../services/agents";
 interface CommissionData {
   id: number;
   name:string;
@@ -11,12 +12,26 @@ interface CommissionData {
 
 }
 
+interface ReportDate {
+  startDate : string;
+  endDate: string;
+}
+
 const Entry = () => {
   const [agentsData, setAgentsData] = useState<AgentData[]>([]);
+  const [reportDate, setReportDate] = useState<ReportDate>({
+    startDate: '',
+    endDate: '',
+  })
   const [formData, setFormData] = useState<CommissionData[]>([]);
 
-
+ 
   const inputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setReportDate(prevData => ({ ...prevData, [name]: value }));
+};
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -60,49 +75,50 @@ const Entry = () => {
       const response = await getAgentsJson();
 
       if (response.status === 200) {
-        setAgentsData(response.data);
+        const sortedData = sortAgentsByName(response.data);
+        setAgentsData(sortedData);
       }
     } catch (error) {
       alert("Under Maintenance. Please Wait.");
     }
   };
 
+  const handleSubmit = async(e: React.FormEvent) => {
+    e.preventDefault();
+
+    const response = await makeReport(formData,reportDate);
+    
+    if(response.status === 200) {
+      console.log(response.data)
+      
+
+    }
+
+    try {
+
+    } catch(error) {
+      alert("Something Went Wrong");
+    }
+  }
+
   useEffect(() => {
     handleAgentsData();
   }, []);
 
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    agentType: string,
-    currentId: number,
-    nextType: string,
-    nextId: number | null
-  ) => {
-    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-      e.preventDefault();
-      const inputs = Array.from(
-        document.querySelectorAll('input[type="number"]')
-      ) as HTMLInputElement[];
-      const currentIndex = inputs.findIndex((input) => input === e.target);
 
-      const newIndex =
-        e.key === "ArrowDown" ? currentIndex + 1 : Math.max(currentIndex - 1, 0);
-
-      if (inputs[newIndex]) {
-        inputs[newIndex].focus();
-      }
-    }
-  };
 
   useEffect(() => {
     console.log("Form Data Updated:", formData);
   }, [formData]);
 
   return (
-    <section className="bg-darkbg w-full min-h-screen h-auto">
+    <section className="bg-darkbg w-full min-h-screen pt-10 pb-10 h-auto">
+     <form onSubmit={handleSubmit}>
       <div className="max-w-4xl mx-auto">
+        <div>
         <h1 className="text-2xl font-bold text-slate-100 mb-6">Create Report</h1>
-        <form className="space-y-4">
+        </div>
+       
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label
@@ -112,6 +128,8 @@ const Entry = () => {
                 Start Date
               </label>
               <input
+              onChange={handleChange}
+               name= 'startDate'
                 type="date"
                 id="start-date"
                 className="w-full p-2 rounded-md bg-darkbg text-slate-100 border border-textHeading focus:outline-none focus:ring focus:ring-textHeading"
@@ -125,13 +143,15 @@ const Entry = () => {
                 End Date
               </label>
               <input
+              onChange={handleChange}
+                name= 'endDate'
                 type="date"
                 id="end-date"
                 className="w-full p-2 rounded-md bg-darkbg text-slate-100 border focus:outline-none border-textHeading focus:ring focus:ring-textHeading"
               />
             </div>
           </div>
-        </form>
+       
       </div>
 
       <div className="max-w-4xl mt-4 mx-auto space-y-6">
@@ -183,7 +203,7 @@ const Entry = () => {
                             Middle Agent: {middle.name}
                           </h3>
                         </div>
-                        <div className="pt-1">
+                        <div className="pt-0.5">
                           <p className="text-slate-300">
                             (Commission: {middle.percentage}%, Parent:{" "}
                             {middle.parent_percentage
@@ -228,7 +248,7 @@ const Entry = () => {
                                   Base Agent: {base.name}
                                 </p>
                               </div>
-                              <div className="pt-1">
+                              <div className="">
                                 <p className="text-slate-300">
                                   (Commission: {base.percentage}%, Parent:{" "}
                                   {base.parent_percentage}%)
@@ -273,6 +293,15 @@ const Entry = () => {
           </div>
         ))}
       </div>
+      <div className="w-full flex items-center justify-center">
+
+    
+      <div className=" w-[300px] flex items-center justify-center">
+        <button className="mt-4 px-4 py-2 bg-textHeading text-white rounded w-full transform transition duration-300 ease-in-out hover:scale-105 focus:ring-2 focus:ring-textHeading" type="submit">Create</button>
+      </div>
+      </div>
+      </form>
+     
     </section>
   );
 };
