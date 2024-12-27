@@ -149,7 +149,7 @@ const CreateAgent: React.FC = () => {
         <section className="flex items-center h-auto min-h-screen pb-11 justify-center bg-darkbg">
             <div className="md:w-[500px] w-[230px] bg-darkbg p-4 sm:p-6">
                 <div className="flex md:flex-row">
-                    <h1 className="text-textHeading md:mr-44 text-3xl font-bold mb-4">Create Agent</h1>
+                    <h1 className="text-slate-200 md:mr-44 text-3xl font-bold mb-4">Create Agent</h1>
                     <div className="pl-6 md:pl-0">
                         <button
                             onClick={handleGoBack}

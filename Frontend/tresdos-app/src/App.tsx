@@ -9,11 +9,11 @@ import Login from './sections/Login';
 import ProtectedRoutes from './protected/ProtectedRoutes';
 import Dashboard from './sections/Dashboard';
 import Entry from './sections/Entry';
-import Summary from './sections/Summary';
 import LogOut from './components/LogOut';
 import Analytics from './sections/Analytics';
 import CreateAgent from './sections/CreateAgent';
 import Email from './sections/Email';
+import Tracking from './sections/Tracking';
 function App() {
   return (
     <MyProvider>
@@ -68,7 +68,7 @@ const Main = () => {
           <Route path="analytics" element={<Analytics />} />
           <Route path="entry" element={<Entry />} />
           <Route path="create-agent" element = {<CreateAgent />} />
-          <Route path="tracking" element={<Summary />} />
+          <Route path="tracking" element={<Tracking />} />
 
         </Route>
 

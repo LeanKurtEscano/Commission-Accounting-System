@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 export const sendEmail = async(email:string) => {
-    const response = await axios.post(`${apiUrl}/email`, {
+    const response = await axios.post(`${apiUrl}/email/`, {
         email:email
     }, {
         headers: {

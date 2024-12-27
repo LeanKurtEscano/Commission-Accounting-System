@@ -8,6 +8,17 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import MidAgent, HeadAgent, BaseAgent
 from .agents.agents_json import agents_to_json
+from .agents.calculate import calculate_report
+from .models import ReportDate
+from .serializers import ReportDateSerializer
+
+
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def delete_report(request,reportId):  
+    report = ReportDate.objects.get(id=reportId)   
+    report.delete()  
+    return Response({"success": "Report Deleted"},status=200)
 
 
 
@@ -16,12 +27,22 @@ from .agents.agents_json import agents_to_json
 def make_report(request):
     form_data = request.data.get("formData")
     report_date = request.data.get("reportDate")
-   
-    print(form_data)
-    print(report_date)
-    
+    try:
+        calculate_report(form_data,report_date)
+        return Response({"success": "Report Created"}, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        print(f"{e}")
     return Response({"success": "Recieved"}, status=status.HTTP_200_OK)
 
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def show_reports(request):
+    reports = ReportDate.objects.all()
+    
+    serializer = ReportDateSerializer(reports, many=True)
+    
+    return Response(serializer.data, status= status.HTTP_200_OK)
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
