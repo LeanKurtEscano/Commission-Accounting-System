@@ -79,7 +79,7 @@ const Email = () => {
                                    
                                     <div className="flex w-full flex-col space-y-2 pr-2">
 
-                                        <button type="submit" className="flex items-center justify-center w-full py-3 bg-textHeading focus:ring-4 focus:outline-none dark:focus:textHeading text-white text-sm rounded-xl shadow-sm"> {/* Reduced py-4 to py-3 */}
+                                        <button type="submit" className="flex items-center transform hover:scale-105 justify-center w-full py-3 bg-textHeading focus:ring-4 focus:outline-none dark:focus:textHeading transition duration-500 ease-in-out text-white text-sm rounded-xl shadow-sm"> {/* Reduced py-4 to py-3 */}
                                             Verify Account
                                         </button>
 

@@ -14,7 +14,7 @@ const SideBar: React.FC = () => {
   const navigate = useNavigate();
 
 
-  const {userDetails,setToggleLog } = useMyContext();
+  const { userDetails, setToggleLog } = useMyContext();
 
   const toUserProfile = () => {
     navigate('/dashboard/analytics');
@@ -25,14 +25,14 @@ const SideBar: React.FC = () => {
 
 
   const handleMenuClick = (index: number) => {
-    
+
     if (index === 4) {
       const savedPath = localStorage.getItem('currentPath');
       if (savedPath) {
         navigate(savedPath);
         setToggleLog(true);
       }
-     
+
     } else {
       setActiveIndex(index);
     }
@@ -60,17 +60,17 @@ const SideBar: React.FC = () => {
         onClick={toUserProfile}
         style={{ height: '80px', visibility: toggle ? 'hidden' : 'visible' }}
       >
-        <div className='flex p-2 hover:bg-gray-800 rounded-lg flex-col items-center'>
-          <div className='w-full flex '>
-            <p className='text-slate-200 text-xs'>{userDetails.username}</p>
+        <div className='flex p-2  rounded-lg flex-col items-center'>
+          <div className='w-full flex flex-row'> {/* Ensure text is aligned horizontally */}
+            <p className='text-slate-200 text-xs'>Tresdos</p>
           </div>
           <div className='overflow-hidden'>
-            <p className='flex text-gray-400 text-xs'>{userDetails.email}</p>
+            <p className='flex text-gray-400 text-xs whitespace-nowrap'>{/* Prevent line break and force horizontal text */}
+              Commission Allocation System
+            </p>
           </div>
         </div>
       </div>
-
-
       <nav className='h-auto flex flex-col justify-center p-4 items-center pb-20'>
         {menuItems.map((item, index) => (
           <div
