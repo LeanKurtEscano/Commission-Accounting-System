@@ -29,7 +29,7 @@ const Table: React.FC<UserDataArray> = ({ data, deleteReport }) => {
     };
 
     return (
-        <div className="md:relative w-5/6 overflow-x-auto mb-5 mx-auto">
+        <div className="md:relative w-11/12 overflow-x-auto mb-5">
             <table className="min-w-[70%] text-xs text-center rtl:text-right text-darktext3 dark:text-darktext3 mx-auto">
                 <thead className="text-xs text-gray-700 uppercase bg-cardbg dark:bg-loginbg dark:text-gray-400">
                     <tr>

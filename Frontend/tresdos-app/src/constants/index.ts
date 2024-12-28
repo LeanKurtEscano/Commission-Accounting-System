@@ -14,6 +14,7 @@ export const menuItems = [
 
     { icon: faChartLine, text: "Analytics", url: '/dashboard/analytics' },
     { icon: faUser, text: "Create Agents", url: '/dashboard/create-agent' },
+    { icon: faUserEdit, text: "Manage Agents", url: '/dashboard/manage-agent' },
     { icon: faFileCirclePlus, text: "Create Report", url: '/dashboard/entry' },
     { icon: faTasks, text: "Tracking", url: '/dashboard/tracking' },
     { icon: faSignOutAlt, text: "Logout",  }

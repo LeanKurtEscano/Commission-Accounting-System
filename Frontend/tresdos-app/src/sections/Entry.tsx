@@ -67,7 +67,7 @@ const Entry = () => {
         (item) => item.id === agentId && item.type === agentType
       );
 
-      if (existingIndex !== -1) { 
+      if (existingIndex !== -1) {
 
         const updatedFormData = [...prevData];
         updatedFormData[existingIndex] = updatedData;
@@ -93,6 +93,8 @@ const Entry = () => {
       alert("Under Maintenance. Please Wait.");
     }
   };
+
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

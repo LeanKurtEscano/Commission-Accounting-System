@@ -26,7 +26,7 @@ const SideBar: React.FC = () => {
 
   const handleMenuClick = (index: number) => {
 
-    if (index === 4) {
+    if (index === 5) {
       const savedPath = localStorage.getItem('currentPath');
       if (savedPath) {
         navigate(savedPath);

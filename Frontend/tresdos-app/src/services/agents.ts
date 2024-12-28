@@ -100,3 +100,14 @@ export const getAgentsJson = async() => {
 }
 
 
+export const makeUpdate = async() => {
+    const accessToken = localStorage.getItem("access_token");
+    const response = await axios.get(`${apiUrl2}/agents/update/`,{
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    })
+
+    return response
+
+}

@@ -16,6 +16,7 @@ import Email from './sections/Email';
 import Tracking from './sections/Tracking';
 import Otp from './sections/Otp';
 import TrackingDetails from './layouts/TrackingDetails';
+import ManageAgents from './sections/ManageAgents';
 function App() {
   return (
     <MyProvider>
@@ -73,6 +74,7 @@ const Main = () => {
           <Route path="create-agent" element = {<CreateAgent />} />
           <Route path="tracking" element={<Tracking />} />
           <Route path='tracking/:reportId' element={ <TrackingDetails />}/>
+          <Route path="manage-agent" element={<ManageAgents />} />
         </Route>
 
       </Routes>
