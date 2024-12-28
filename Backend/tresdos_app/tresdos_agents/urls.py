@@ -7,4 +7,6 @@ urlpatterns = [
     path('agents/display/', views.display_agents, name = "display-agents"),
     path('agents/report/', views.make_report, name = "make-reports"),
     path('delete/<int:reportId>/', views.delete_report, name = "delete-reports"),
+    path('delete/<int:reportId>/', views.delete_report, name = "delete-reports"),
+    path('report/<int:reportId>', views.get_report, name = "get-report")
 ]

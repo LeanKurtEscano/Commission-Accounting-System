@@ -1,5 +1,5 @@
 import { AgentData } from "../services/agents";
-
+import { ReportDetails } from "../layouts/TrackingDetails";
 export const sortAgentsByName = (data: AgentData[]): AgentData[] => {
     return data.map((headAgent) => ({
       ...headAgent,
@@ -13,3 +13,8 @@ export const sortAgentsByName = (data: AgentData[]): AgentData[] => {
         .sort((a, b) => a.name.localeCompare(b.name)),
     }));
   };
+
+
+export const sortAgentsByIncome = (data: ReportDetails[]): ReportDetails[] => {
+  return data.sort((a,b) => b.income - a.income );
+}

@@ -9,8 +9,19 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import MidAgent, HeadAgent, BaseAgent
 from .agents.agents_json import agents_to_json
 from .agents.calculate import calculate_report
-from .models import ReportDate
-from .serializers import ReportDateSerializer
+from .models import ReportDate,AgentIncomeReport
+from .serializers import ReportDateSerializer,AgentReportSerializer
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_report(request,reportId):
+    int_report_id =  int(reportId)
+    report = AgentIncomeReport.objects.filter(report_date_id=int_report_id)
+    serializer = AgentReportSerializer(report, many= True)
+    
+    return Response(serializer.data, status= status.HTTP_200_OK)
+    
 
 
 @api_view(["DELETE"])

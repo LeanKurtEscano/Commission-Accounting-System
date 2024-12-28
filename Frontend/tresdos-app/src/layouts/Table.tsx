@@ -25,7 +25,7 @@ const Table: React.FC<UserDataArray> = ({ data, deleteReport }) => {
     };
 
     const handleViewReport = (id: number) => {
-        navigate(`/report/${id}`); // Replace `/report/${id}` with the correct path for viewing reports
+        navigate(`/dashboard/tracking/${id}`); // Replace `/report/${id}` with the correct path for viewing reports
     };
 
     return (

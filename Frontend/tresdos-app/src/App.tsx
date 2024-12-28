@@ -14,6 +14,8 @@ import Analytics from './sections/Analytics';
 import CreateAgent from './sections/CreateAgent';
 import Email from './sections/Email';
 import Tracking from './sections/Tracking';
+import Otp from './sections/Otp';
+import TrackingDetails from './layouts/TrackingDetails';
 function App() {
   return (
     <MyProvider>
@@ -51,6 +53,7 @@ const Main = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/email" element={<Email />} />
+        <Route path="/otp" element={<Otp />} />
 
         <Route
           path="/dashboard/*"
@@ -69,7 +72,7 @@ const Main = () => {
           <Route path="entry" element={<Entry />} />
           <Route path="create-agent" element = {<CreateAgent />} />
           <Route path="tracking" element={<Tracking />} />
-
+          <Route path='tracking/:reportId' element={ <TrackingDetails />}/>
         </Route>
 
       </Routes>

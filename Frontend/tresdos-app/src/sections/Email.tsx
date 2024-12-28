@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { sendEmail } from '../services/axios'
@@ -9,13 +9,7 @@ const Email = () => {
     const [emailError, setEmailError] = useState("");
     const navigate = useNavigate();
 
-    useEffect(() => {
-      const userEmail = localStorage.getItem('email_otp');
-        if(userEmail) {
-            localStorage.removeItem('email_otp');
-        }
- 
-    }, [])
+    
 
     const submitEmail = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -24,9 +18,9 @@ const Email = () => {
         try {
             const response = await sendEmail(email);
 
-            if(response.status == 202){
-                localStorage.setItem('email_otp', email);
-                navigate('/emailotp');
+            if(response.status == 200){
+                sessionStorage.setItem("email", email);
+                navigate('/otp');
                
             }
 

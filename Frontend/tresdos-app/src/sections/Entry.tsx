@@ -67,7 +67,7 @@ const Entry = () => {
         (item) => item.id === agentId && item.type === agentType
       );
 
-      if (existingIndex !== -1) { // for updating the existing values
+      if (existingIndex !== -1) { 
 
         const updatedFormData = [...prevData];
         updatedFormData[existingIndex] = updatedData;

@@ -68,6 +68,12 @@ def register_admin(request):
     user.save()
     return Response({"success": "User registered"}, status= status.HTTP_200_OK)
 
+
+
+
+
+
+
 @api_view(["POST"])
 def reset_password_email(request):   
     try:     
@@ -91,3 +97,44 @@ def reset_password_email(request):
     except Exception as e:
         print(f"{e}")
         return Response({"error": "Something went wrong"}, status=500)
+    
+        
+@api_view(["POST"])
+def resend_otp(request):
+    try:     
+        email = request.data.get("email")
+        message = "Your OTP for account verification"
+        otp_generated = send_otp_to_email(email,message)
+        OTP_EXPIRATION_TIME = 120     
+        purpose = "account_verification"
+        cache_key = f"{email}_{purpose}"
+        cache.set(cache_key,otp_generated,OTP_EXPIRATION_TIME) 
+        
+        return Response({"success":"OTP sent"}, status= status.HTTP_200_OK)    
+    except Exception as e:
+        print(f"{e}")
+        
+        
+@api_view(["POST"])
+def verify_password_otp(request):
+    try:
+        email = request.data.get("email")
+        otp_code = request.data.get("otpCode")
+        purpose = "reset_password"
+        cache_key = f"{email}_{purpose}"
+        
+      
+        cached_otp = cache.get(cache_key)
+        
+        if cached_otp is None:
+            return Response({"error": "OTP has expired. Please request a new one."}, status=status.HTTP_404_NOT_FOUND)
+        
+       
+        if str(cached_otp) == str(otp_code):
+            return Response({"success": "Email is verified."}, status=status.HTTP_200_OK)
+        
+        return Response({"error": "Incorrect OTP code. Please try again."}, status=status.HTTP_400_BAD_REQUEST)
+    
+    except Exception as e:
+        print(f"Error: {e}")
+        return Response({"error": "An error occurred. Please try again later."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
