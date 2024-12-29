@@ -17,12 +17,7 @@ interface UserDataArray {
 }
 
 const ReportTable: React.FC<UserDataArray> = ({ data }) => {
-  const navigate = useNavigate();
-  const [deleteUserId, setDeleteUserId] = useState<number | null>(null);
 
-  const showToggleModal = (id: number) => {
-    setDeleteUserId(id);
-  };
 
   return (
     <div className="md:relative w-11/12 overflow-x-auto mb-5">
@@ -58,7 +53,7 @@ const ReportTable: React.FC<UserDataArray> = ({ data }) => {
             ))
           ) : (
             <tr>
-              <td colSpan={6} className="px-1 py-4 text-center">
+              <td colSpan={6} className="px-1 text-white py-4 text-center">
                 No data available
               </td>
             </tr>

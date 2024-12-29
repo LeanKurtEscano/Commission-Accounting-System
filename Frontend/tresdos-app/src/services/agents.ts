@@ -102,8 +102,28 @@ export const getAgentsJson = async() => {
 
 export const makeUpdate = async() => {
     const accessToken = localStorage.getItem("access_token");
-    const response = await axios.get(`${apiUrl2}/agents/update/`,{
+    const response = await axios.post(`${apiUrl2}/agents/update/`,{
         headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    })
+
+    return response
+
+}
+
+
+
+
+export const deleteAgent = async(id:number, agentType: string) => {
+    const accessToken = localStorage.getItem("access_token");
+    const response = await axios.post(`${apiUrl2}/agent/delete/`,{
+        id:id,
+        agentType:agentType
+
+    },{
+        headers: {
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${accessToken}`
         }
     })

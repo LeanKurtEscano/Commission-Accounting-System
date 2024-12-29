@@ -12,6 +12,30 @@ from .agents.calculate import calculate_report
 from .models import ReportDate,AgentIncomeReport
 from .serializers import ReportDateSerializer,AgentReportSerializer
 
+@api_view(["POST"])
+def delete_agent(request):
+    
+    agent_id = request.data.get("id")
+    agent_type = request.data.get("agentType")
+    
+    
+    if agent_type == "headAgent":
+        agent = HeadAgent.objects.get(id = agent_id)
+        agent.delete()
+        return Response({"success":"Agent Deleted!"}, status= status.HTTP_200_OK)
+    
+    if agent_type == "midAgent":
+        agent = MidAgent.objects.get(id = agent_id)
+        agent.delete()
+        return Response({"success":"Agent Deleted!"}, status= status.HTTP_200_OK)
+    
+    if agent_type == "baseAgent":
+        agent = BaseAgent.objects.get(id = agent_id)
+        agent.delete()
+        return Response({"success":"Agent Deleted!"}, status= status.HTTP_200_OK)
+    
+    return Response({"error": "something went wrong"}, status= status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])

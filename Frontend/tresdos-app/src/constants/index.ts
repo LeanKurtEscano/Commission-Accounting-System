@@ -4,7 +4,7 @@ import { faUserEdit,faChartLine,faTasks, faUser,faFileCirclePlus} from '@fortawe
 
 export const navItems = [
     {text: "Analytics", link: '/dashboard/analytics'},
-    {text: "Users", link: '/dashboard/entry'},
+    {text: "Agents", link: '/dashboard/manage-agent'},
     {text: "Tracking", link:'/dashboard/tracking'}
 ]
 
