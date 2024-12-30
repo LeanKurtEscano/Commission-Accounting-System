@@ -17,6 +17,7 @@ import Tracking from './sections/Tracking';
 import Otp from './sections/Otp';
 import TrackingDetails from './layouts/TrackingDetails';
 import ManageAgents from './sections/ManageAgents';
+import ResetPassword from './sections/ResetPassword';
 function App() {
   return (
     <MyProvider>
@@ -55,6 +56,7 @@ const Main = () => {
         <Route path="/" element={<Login />} />
         <Route path="/email" element={<Email />} />
         <Route path="/otp" element={<Otp />} />
+        <Route path="/reset" element={<ResetPassword />} />
 
         <Route
           path="/dashboard/*"
@@ -75,6 +77,7 @@ const Main = () => {
           <Route path="tracking" element={<Tracking />} />
           <Route path='tracking/:reportId' element={ <TrackingDetails />}/>
           <Route path="manage-agent" element={<ManageAgents />} />
+          
         </Route>
 
       </Routes>

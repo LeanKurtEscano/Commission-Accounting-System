@@ -4,6 +4,7 @@ import { navItems } from '../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useMyContext } from '../context/MyContext';
+import logo from '../assets/logo.jpg'
 const Navbar = () => {
 
     const [toggle, setToggle] = useState(false);
@@ -22,7 +23,7 @@ const Navbar = () => {
 
     const handleLogin = () => {
         setToggle(false);
-        
+
     };
 
 
@@ -31,9 +32,11 @@ const Navbar = () => {
             <nav className="flex items-center justify-end bg-navbg transition-all duration-700 w-full shadow-xl pt-4 pb-4 pr-36">
                 <div className='mr-8 absolute left-24'>
                     <Link to='/dashboard/analytics'>
-                        <h1 className="text-slate-200 text-xl font-bold">
-                           Tresdos
-                        </h1>
+                        <div className="flex justify-center items-center mb-2 h-16 w-16 rounded-full bg-gray-200 overflow-hidden">
+                            <img src={logo} alt="Logo" className="h-full w-full object-cover" />
+                        </div>
+
+
 
                     </Link>
                 </div>
@@ -67,11 +70,11 @@ const Navbar = () => {
                         )}
                     </ul>
                 </div>
-                <div className='md:hidden text-cyan-400 cursor-pointer' onClick={toggleNav}>
+                <div className='md:hidden text-textHeading cursor-pointer' onClick={toggleNav}>
                     <FontAwesomeIcon icon={toggle ? faTimes : faBars} className='text-lg pt-4 pb-4' />
                 </div>
                 {toggle && (
-                    <div className={`absolute mt-14 bg-loginbg rounded-lg border-cyan-600 shadow-lg border-2 transition-all w-[300px] z-50 right-1 ${toggle ? "top-12 translate-y-0" : "top-9 translate-y-full"} duration-300 ease-in-out`}>
+                    <div className={`absolute mt-14 bg-cardbg rounded-lg border-textHeading shadow-lg border-2 transition-all w-[300px] z-50 right-1 ${toggle ? "top-12 translate-y-0" : "top-9 translate-y-full"} duration-300 ease-in-out`}>
                         <ul className="flex flex-col items-center p-4">
                             {navItems.map((item) => (
                                 <li className='relative group font-normal my-2' key={item.text}>

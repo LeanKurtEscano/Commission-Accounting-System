@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMyContext } from '../context/MyContext';
 import { useEffect } from 'react';
 import { handleLogin } from '../services/axios';
-
+import logo from '../assets/logo.jpg'
 
 const Login: React.FC = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -84,8 +84,11 @@ const Login: React.FC = () => {
   return (
     <section className='h-screen w-full flex bg-darkbg justify-center items-center'>
       <div className='flex flex-col p-6 border-cardbg bg-cardbg border-2 rounded-lg shadow-xl w-96'>
+      <div className="flex justify-center mb-2">
+          <img src={logo} alt="Logo" className="h-10" />
+        </div>
        
-        <h2 className='text-2xl font-semibold text-center text-textHeading'>
+        <h2 className='text-2xl font-semibold text-center text-slate-200'>
           Welcome Admin
         </h2>
         <form className='flex flex-col' onSubmit={loginSubmit}>

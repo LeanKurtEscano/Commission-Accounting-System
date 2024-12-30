@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 export const sendEmail = async(email:string) => {
-    const response = await axios.post(`${apiUrl}/otp/`, {
+    const response = await axios.post(`${apiUrl}/email/`, {
         email:email
     }, {
         headers: {
@@ -66,4 +66,19 @@ export const userEmailResend = async() => {
         }
       })
       return response
+}
+
+export const resetPassword = async(password:string, confirm:string) => {
+    const email = sessionStorage.getItem('email');
+    const response = await axios.post(`${apiUrl}/reset/`, {
+        email: email,
+        password: password,
+        confirm: confirm,
+    }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    return response
 }

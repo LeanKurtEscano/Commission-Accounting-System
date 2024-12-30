@@ -138,3 +138,23 @@ def verify_password_otp(request):
     except Exception as e:
         print(f"Error: {e}")
         return Response({"error": "An error occurred. Please try again later."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(["POST"])
+def reset_password(request):
+    try:
+        email = request.data.get('email')
+        password = request.data.get('password')
+        confirm_password = request.data.get('confirm')
+        
+        if password != confirm_password:
+            return Response({"error", "Password does not match"}, status=400)
+        
+        else:     
+            user = User.objects.get(email = email)
+            user.set_password(password)
+            user.save()
+            return Response({"success": "Password has been reset successfully."}, status=200)
+
+    except Exception as e:
+        return Response({"error": "Something Went Wrong"}, status=500)

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createAgents, getAgents } from '../services/agents';
 import SuccessNotif from '../components/SuccessNotif';
-import { validateAgentName } from '../constants/validation';
+import { validateAgentName,validateNumber } from '../constants/validation';
+
 interface AgentProfile {
     agentName: string;
     agentType: string;
@@ -16,6 +17,8 @@ interface AgentProfile {
 type fieldErrors = {
     agentError: string;
     commissionError: string;
+    parentHeadError: string;
+    parentMidError:string;
 }
 
 type Agent = {
@@ -30,6 +33,8 @@ const CreateAgent: React.FC = () => {
     const [fieldErrors, setFieldErrors] = useState<fieldErrors>({
         agentError: "",
         commissionError: "",
+        parentHeadError: "",
+        parentMidError: "",
     });
     const [headAgents, setHeadAgents] = useState<Agent[]>([])
     const [midAgents, setMidAgents] = useState<Agent[]>([])
@@ -80,12 +85,33 @@ const CreateAgent: React.FC = () => {
 
 
         const agentNameError = validateAgentName(formData.agentName);
+        const percentageError = validateNumber(formData.percentage);
+        const parentMidError = validateNumber(formData.parentMidAgentPercentage);
+        const parentHeadError = validateNumber(formData.parentHeadAgentPercentage);
 
+        if(percentageError) {
+            setFieldErrors((prev) => ({...prev, commissionError: percentageError}))
+            return
+        }
+
+        if(parentMidError) {
+            setFieldErrors((prev) => ({...prev, parentMidError: parentMidError}))
+            return
+        }
+        if(parentHeadError) {
+            setFieldErrors((prev) => ({...prev, parentMidError: parentHeadError}))
+            return
+        }
+
+      
+       
         if (agentNameError) {
             setFieldErrors(prev => ({
                 ...prev,
                 agentError: agentNameError
             }));
+
+            return
         }
 
 

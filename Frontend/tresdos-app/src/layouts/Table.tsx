@@ -51,7 +51,7 @@ const Table: React.FC<UserDataArray> = ({ data, deleteReport }) => {
                                     <div className="flex justify-center items-center space-x-2">
                                         <button
                                             onClick={() => handleViewReport(item.id)}
-                                            className="flex items-center px-3 py-1 text-sm font-medium text-textHeading bg-transparent border border-textHeading rounded-md hover:bg-textHeading hover:text-white"
+                                            className="flex items-center px-3 py-1 text-sm font-medium text-slate-200 bg-transparent border border-textHeading rounded-md hover:bg-textHeading hover:text-white"
                                         >
                                             <FontAwesomeIcon icon={faEye} className="mr-2" />
                                             View Report

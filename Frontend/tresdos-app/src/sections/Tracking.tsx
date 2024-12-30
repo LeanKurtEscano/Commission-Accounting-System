@@ -97,7 +97,7 @@ const Tracking: React.FC = () => {
                 {/* Month Dropdown Button */}
                 <div className="relative">
                     <button
-                        className="flex items-center space-x-2 bg-textHeading text-white px-6 py-2 rounded-md shadow-md hover:bg-textHeading hover:scale-105 transition-transform duration-300"
+                        className="flex items-center space-x-2 bg-layer2 text-white px-6 py-2 rounded-md shadow-md hover:bg-textHeading hover:scale-105 transition-transform duration-300"
                         onClick={() => setShowMonthDropdown((prev) => !prev)}
                     >
                         <FontAwesomeIcon icon={faCalendarAlt} />
@@ -130,7 +130,7 @@ const Tracking: React.FC = () => {
                 {/* Year Dropdown Button */}
                 <div className="relative">
                     <button
-                        className="flex items-center space-x-2 bg-textHeading text-white px-6 py-2 rounded-md shadow-md hover:bg-textHeading hover:scale-105 transition-transform duration-300"
+                        className="flex items-center space-x-2 bg-layer2 text-white px-6 py-2 rounded-md shadow-md hover:bg-textHeading hover:scale-105 transition-transform duration-300"
                         onClick={() => setShowYearDropdown((prev) => !prev)}
                     >
                         <FontAwesomeIcon icon={faCalendarAlt} />
