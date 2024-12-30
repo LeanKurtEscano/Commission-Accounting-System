@@ -11,7 +11,23 @@ from .agents.agents_json import agents_to_json
 from .agents.calculate import calculate_report
 from .models import ReportDate,AgentIncomeReport
 from .serializers import ReportDateSerializer,AgentReportSerializer
+from .agents.update_agents import make_update_agent
 
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def update_agent(request):
+    form_data = request.data.get("formData")
+    print(form_data)  # Debug: Check the received form data
+    
+    try:
+        # Call the utility function to update the agent
+        make_update_agent(form_data)
+        return Response({"success": "Agents Updated"}, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(f"Error: {e}")  # Debug: Log the error
+        return Response({"error": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST)
+    
 @api_view(["POST"])
 def delete_agent(request):
     
@@ -67,8 +83,8 @@ def make_report(request):
         return Response({"success": "Report Created"}, status=status.HTTP_201_CREATED)
     except Exception as e:
         print(f"{e}")
-    return Response({"success": "Recieved"}, status=status.HTTP_200_OK)
-
+        
+        return Response({"error":"Something Went Wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])

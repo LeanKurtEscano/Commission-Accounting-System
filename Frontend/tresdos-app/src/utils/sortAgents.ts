@@ -11,7 +11,7 @@ export const sortAgentsByName = (data: AgentData[]): AgentData[] => {
           ),
         }))
         .sort((a, b) => a.name.localeCompare(b.name)),
-    }));
+    })).sort((a,b) => a.name.localeCompare(b.name) );
   };
 
 

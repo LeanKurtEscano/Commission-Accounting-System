@@ -99,20 +99,35 @@ export const getAgentsJson = async() => {
     return response
 }
 
+interface UpdateData {
+    id: number;
+    name: string;
+    type: string;
+    commission: number;
+    parent?: number | null;
+    parentId?: number | null;
+  }
 
-export const makeUpdate = async() => {
+
+  export const makeUpdate = async(formData: UpdateData[]) => {
     const accessToken = localStorage.getItem("access_token");
-    const response = await axios.post(`${apiUrl2}/agents/update/`,{
-        headers: {
-            'Authorization': `Bearer ${accessToken}`
-        }
-    })
+    try {
+        const response = await axios.post(`${apiUrl2}/agents/update/`, {
+            formData: formData  
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error("Error during API call:", error);
+        throw error; 
+    }
+};
 
-    return response
-
-}
-
-
+  
 
 
 export const deleteAgent = async(id:number, agentType: string) => {

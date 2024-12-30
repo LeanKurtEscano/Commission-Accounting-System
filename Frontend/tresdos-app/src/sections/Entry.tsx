@@ -310,7 +310,10 @@ const Entry = () => {
 
 
           <div className=" w-[300px] flex items-center justify-center">
-            <button className="mt-4 px-4 py-2 bg-textHeading text-white rounded w-full transform transition duration-300 ease-in-out hover:scale-105 focus:ring-2 focus:ring-textHeading" type="submit">Create</button>
+            <button disabled={reportDate.startDate === '' || reportDate.endDate === ''}  className={`mt-4 px-4 py-2 rounded w-full transform transition duration-300 ease-in-out ${formData.length === 0
+                    ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                    : 'bg-textHeading text-white hover:scale-105 focus:ring-2 focus:ring-textHeading'
+                  }`} type="submit">Create</button>
           </div>
         </div>
       </form>

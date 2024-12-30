@@ -3,7 +3,7 @@ from . import views
 urlpatterns = [
     path('agents/', views.create_agents,name="create-agent"),
     path('agent/delete/', views.delete_agent,name="delete-agent"),
-    
+    path('agents/update/', views.update_agent,name="update-agent"),
     path('reports/', views.show_reports,name="show-reports"),
     path('agents/all/',views.get_agents,name="get-agents"),
     path('agents/display/', views.display_agents, name = "display-agents"),
