@@ -120,7 +120,7 @@ const ResetPassword: React.FC = () => {
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}
               id="confirmPassword"
-              className="border bg-inputcolor border-inputcolor placeholder:text-slate-200 text-slate-200 focus:bg-inputcolor rounded p-2 pr-10 w-full"
+              className="border bg-inputcolor border-inputcolor placeholder:text-inputtext text-slate-200 focus:bg-inputcolor rounded p-2 pr-10 w-full"
               placeholder="Confirm your password"
             />
             <FontAwesomeIcon

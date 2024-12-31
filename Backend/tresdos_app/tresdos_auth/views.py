@@ -106,7 +106,7 @@ def resend_otp(request):
         message = "Your OTP for account verification"
         otp_generated = send_otp_to_email(email,message)
         OTP_EXPIRATION_TIME = 120     
-        purpose = "account_verification"
+        purpose = "reset_password"
         cache_key = f"{email}_{purpose}"
         cache.set(cache_key,otp_generated,OTP_EXPIRATION_TIME) 
         

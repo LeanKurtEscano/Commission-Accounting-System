@@ -19,3 +19,19 @@ export const menuItems = [
     { icon: faSignOutAlt, text: "Logout",  }
  
 ]
+
+export const months = [
+    { month: 'January' },
+    { month: 'February' },
+    { month: 'March' },
+    { month: 'April' },
+    { month: 'May' },
+    { month: 'June' },
+    { month: 'July' },
+    { month: 'August' },
+    { month: 'September' },
+    { month: 'October' },
+    { month: 'November' },
+    { month: 'December' }
+  ];
+  

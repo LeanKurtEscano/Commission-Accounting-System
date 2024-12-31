@@ -66,7 +66,7 @@ const Main = () => {
                 <LogOut />
               )}
 
-              <Navbar />
+             
               <Dashboard />
             </ProtectedRoutes>
           }
