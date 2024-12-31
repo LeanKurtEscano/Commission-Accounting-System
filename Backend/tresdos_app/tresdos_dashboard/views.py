@@ -40,7 +40,6 @@ def get_current_month_sum(request):
         )
     )
     
-    print(month_sum)
 
     return Response(month_sum, status=200)
 
@@ -51,7 +50,7 @@ def get_current_month_sum(request):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_total_share(request):
-    total_share = AgentIncomeReport.objects.aggregate(total_share=Sum('income'))['total_share'] or 0  # Handle None case
+    total_share = AgentIncomeReport.objects.aggregate(total_share=Sum('income'))['total_share'] or 0  
     return Response({"total": total_share}, status=status.HTTP_200_OK)
 
 
