@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/auth/', include('tresdos_auth.urls')),
     path('api/v1/agents/', include('tresdos_agents.urls')),
+    path('api/v1/dashboard/', include('tresdos_dashboard.urls')),
 ]

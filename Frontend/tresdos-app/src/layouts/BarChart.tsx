@@ -4,7 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 // Register the required Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
+import { getTotalSum } from '../services/dashboard';
 interface AgentCount {
   head: number;
   mid: number;
@@ -13,21 +13,27 @@ interface AgentCount {
 
 const BarChart: React.FC = () => {
   const [agentData, setAgentData] = useState<AgentCount | null>(null);
+  const apiUrl = "count";
+
+   const handleSummary = async (
+      endPoint: string,
+
+    ) => {
+      try {
+        const response = await getTotalSum(endPoint); 
+        if (response.status === 200) {
+          console.log(response.data);
+          setAgentData(response.data); 
+        }
+      } catch (error) {
+        console.error("Error fetching summary:", error);
+      }
+    };
 
   useEffect(() => {
     // Fetch agent data from API (replace with actual API call)
-    const fetchAgentData = async () => {
-      // Simulate fetching data
-      const fetchedData = {
-        head: 10,
-        mid: 20,
-        base: 30,
-      };
-
-      setAgentData(fetchedData);
-    };
-
-    fetchAgentData();
+    handleSummary(apiUrl);
+   
   }, []);
 
   // Prepare chart data

@@ -22,7 +22,10 @@ const LineChart: React.FC = () => {
   });
 
   // State for the selected month
-  const [selectedMonth, setSelectedMonth] = useState<string>('January');
+  const currentMonth = new Date().toLocaleString('default', { month: 'long' });
+
+  // Set the default value of selectedMonth to the current month
+  const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
 
   // State for the dropdown visibility
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -117,7 +120,7 @@ const LineChart: React.FC = () => {
                 className="px-4 py-2 cursor-pointer hover:bg-gray-700"
                 onClick={() => {
                   handleMonthSelect(item.month);
-                  setIsDropdownOpen(false); // Close dropdown after selection
+                  setIsDropdownOpen(false); 
                 }}
               >
                 {item.month}
