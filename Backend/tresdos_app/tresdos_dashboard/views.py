@@ -3,11 +3,11 @@ from rest_framework.decorators import permission_classes
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from tresdos_agents.models import AgentIncomeReport,BaseAgent,HeadAgent,MidAgent
+from tresdos_agents.models import AgentIncomeReport,BaseAgent,HeadAgent,MidAgent,ReportDate
 from django.db.models import Sum,Count
-from datetime import datetime,timedelta
-from django.utils import timezone
+from datetime import datetime,timedelta,timezone
 import calendar
+
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -101,64 +101,127 @@ def get_latest_reports(request):
 
 
 
-
-
-
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def get_monthly_sum(request):
     try:
-       
+     
         month_name = request.data.get("selectedMonth", "").capitalize()
 
       
         if month_name not in calendar.month_name[1:]:
-            return Response({"error": "Invalid month name"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Invalid month name"}, status=400)
 
-    
-        current_year = timezone.now().year
+        current_year = datetime.now().year
 
-        # Convert month name to month number
+
+      
         month_number = list(calendar.month_name).index(month_name)
 
-        # Get the first and last day of the month
-        start_date = datetime(current_year, month_number, 1)  # First day of the month
-        end_date = datetime(current_year, month_number, calendar.monthrange(current_year, month_number)[1])  # Last day of the month
-
-       
-        weekly_data = []
-
       
-        reports = AgentIncomeReport.objects.filter(
-            report_date__start_date__gte=start_date,
-            report_date__end_date__lte=end_date
-        )
+        start_date = datetime(current_year, month_number, 1)
+        end_date = datetime(current_year, month_number, calendar.monthrange(current_year, month_number)[1])
 
-      
-        week_start = start_date
-        while week_start <= end_date:
-            # Calculate the end of the current week (7 days after week_start)
-            week_end = min(week_start + timedelta(days=6), end_date)
+        report_dates = ReportDate.objects.filter(
+            start_date__gte=start_date,
+            end_date__lte=end_date
+        ).order_by('start_date')
 
         
-            weekly_sum = reports.filter(
-                report_date__start_date__gte=week_start,
-                report_date__end_date__lte=week_end
-            ).aggregate(
-                weekly_sum=Sum('total_amount')
-            )['weekly_sum'] or 0 
-            
-            weekly_data.append({
-                'week_start': week_start.strftime('%Y-%m-%d'),
-                'week_end': week_end.strftime('%Y-%m-%d'),
-                'weekly_sum': weekly_sum
-            })
+        weekly_data = {}
+        week_count = 1
 
-         
-            week_start = week_end + timedelta(days=1)
+       
+        for report_date in report_dates:
+            # Aggregate total_amount for the current report_date
+            total_sum = AgentIncomeReport.objects.filter(
+                report_date=report_date
+            ).aggregate(total_amount_sum=Sum('total_amount'))['total_amount_sum'] or 0
 
-     
-        return Response(weekly_data, status=status.HTTP_200_OK)
+          
+            if total_sum > 0:
+                weekly_data[f'week{week_count}'] = total_sum
+                week_count += 1 
+
+        return Response(weekly_data, status=200)
 
     except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+      
+        return Response({"error": str(e)}, status=500)
+
+
+
+
+@api_view(["GET"])
+def agent_total_summary(request):
+    summary = []
+
+    
+    for head in HeadAgent.objects.all():
+        head_agent_reports = AgentIncomeReport.objects.filter(agent_role='head_agent', agent_id=head.id)
+        aggregate_data = head_agent_reports.aggregate(
+            total_amount=Sum('total_amount'), total_income=Sum('income')
+        )
+
+        summary.append({
+            'name': head.name,
+            'role': 'head_agent',
+            'totalAmount': aggregate_data['total_amount'] or 0,
+            'totalIncome': aggregate_data['total_income'] or 0,
+        })
+
+    
+    for mid in MidAgent.objects.all():
+        mid_agent_reports = AgentIncomeReport.objects.filter(agent_role='mid_agent', agent_id=mid.id)
+        aggregate_data = mid_agent_reports.aggregate(
+            total_amount=Sum('total_amount'), total_income=Sum('income')
+        )
+
+        summary.append({
+            'name': mid.name,
+            'role': 'mid_agent',
+            'totalAmount': aggregate_data['total_amount'] or 0,
+            'totalIncome': aggregate_data['total_income'] or 0,
+        })
+
+   
+    for base in BaseAgent.objects.all():
+        base_agent_reports = AgentIncomeReport.objects.filter(agent_role='base_agent', agent_id=base.id)
+        aggregate_data = base_agent_reports.aggregate(
+            total_amount=Sum('total_amount'), total_income=Sum('income')
+        )
+
+        summary.append({
+            'name': base.name,
+            'role': 'base_agent',
+            'totalAmount': aggregate_data['total_amount'] or 0,
+            'totalIncome': aggregate_data['total_income'] or 0,
+        })
+
+    return Response(summary, status=status.HTTP_200_OK)
+
+
+
+@api_view(["GET"])
+def get_yearly_sales(request):
+ 
+    current_year = datetime.now().year
+
+   
+
+
+    # Define the date range for the year
+    start_date = datetime(current_year, 1, 1, tzinfo=timezone.utc).date()
+    end_date = datetime(current_year, 12, 31, 23, 59, 59, tzinfo=timezone.utc).date()
+
+    # Filter by the ReportDate model
+    total_income = AgentIncomeReport.objects.filter(
+        report_date__start_date__gte=start_date,
+        report_date__end_date__lte=end_date
+    ).aggregate(total_amount=Sum('total_amount'))
+
+    
+    return Response({
+        
+        "total": total_income["total_amount"] or 0
+    })

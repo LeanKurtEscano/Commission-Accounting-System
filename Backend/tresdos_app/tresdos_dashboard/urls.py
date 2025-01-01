@@ -7,6 +7,7 @@ urlpatterns = [
     path('latest/', views.get_latest_reports,name="latest-reports"),
     path('current/', views.get_current_month_sum,name="current-month"),
     path('monthly/', views.get_monthly_sum ,name="current-month"),
-    
+    path('summary/', views.agent_total_summary ,name="agent-summary"),
+    path('yearly/', views.get_yearly_sales ,name="yearly-summary"),
     
 ]

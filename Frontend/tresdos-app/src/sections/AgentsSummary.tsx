@@ -1,51 +1,46 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
-import { getReportDetails } from '../services/report';
-import { useParams } from 'react-router-dom';
-import { sortAgentsByIncome } from '../utils/sortAgents';
-import ReportTable from './ReportTable';
+import SummaryTable from '../layouts/SummaryTable';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { getTotalSum } from '../services/dashboard';
+import { sortAgentsByIncomeSummary } from '../utils/sortAgents';
 
-export interface ReportDetails {
-  id: number;
-  agent_name: string;
-  agent_role: string;
-  total_amount: number;
-  percentage: number;
-  parent_percentage: number;
-  income: number;
-  report_date_id: number;
-}
-
-interface ReportId {
-  reportId: string;
+export interface AgentSummary {
+  name:string;
+  role:string;
+  totalAmount: number;
+  totalIncome:number
 }
 
 
 
-const TrackingDetails: React.FC = () => {
-  const { reportId } = useParams();
-  const [reportDetails, setReportDetails] = useState<ReportDetails[]>([]);
+
+const AgentsSummary: React.FC = () => {
+
+  const [agentSummary, setAgentSummary] = useState<AgentSummary[]>([]);
   const navigate = useNavigate()
+  const apiUrl = "summary"
   const handleReportDetails = async () => {
+    try{
+        const response = await getTotalSum(apiUrl);
+        
+        if(response.status === 200) {
+            const sortedData = sortAgentsByIncomeSummary(response.data);
+            setAgentSummary(sortedData);
 
-    try {
-      const response = await getReportDetails(reportId);
-
-      if (response.status === 200) {
-        const sortedData = sortAgentsByIncome(response.data);
-        setReportDetails(sortedData);
-      }
+        }
 
     } catch (error) {
-      alert("something went wrong");
-
+        alert("Network Error. Please try again later.")
     }
+   
+
+
   }
 
-  
+  console.log(agentSummary);
 
   useEffect(() => {
     handleReportDetails();
@@ -58,7 +53,7 @@ const TrackingDetails: React.FC = () => {
         {/* Go Back Button with Left Arrow */}
         <button
           className="flex items-center space-x-2 bg-textHeading text-white px-4 py-2 rounded-md shadow-md hover:bg-textHeading hover:scale-105 transition-transform duration-300 w-fit"
-          onClick={() => navigate('/dashboard/tracking')}
+          onClick={() => navigate('/dashboard/analytics')}
         >
           <FontAwesomeIcon icon={faArrowLeft} />
           <span>Go Back</span>
@@ -67,11 +62,11 @@ const TrackingDetails: React.FC = () => {
 
 
       <div className="flex overflow-x-auto items-center flex-col">
-        <ReportTable data={reportDetails} />
+        <SummaryTable data={agentSummary} />
       </div>
     </section>
   )
 };
 
 
-export default TrackingDetails
+export default AgentsSummary

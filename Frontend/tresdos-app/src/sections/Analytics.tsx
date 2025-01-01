@@ -3,7 +3,7 @@ import SummaryCards from '../layouts/SummaryCards'
 import LineChart from '../layouts/LineChart'
 import BarChart from '../layouts/BarChart'
 import LatestReports from '../layouts/LatestReports'
-import { formatDates } from '../utils/formatDate'
+
 const Analytics: React.FC = () => {
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'long', 
@@ -13,16 +13,16 @@ const Analytics: React.FC = () => {
   });
  
   return (
-    <section className='bg-gradient-to-br bg-darkbg flex flex-col pb-4  w-full min-h-screen'>
-      <div className='w-full pt-4 pl-5'>
-      <div className='text-slate-200  w-[400px] flex flex-col items-center justify-center'>
-        <h1 className='text-4xl font-bold'>Overview</h1>
-        <p className='text-lg pl-16 text-gray-400 mt-2'>{today}</p> 
-      </div>
-      </div>
+    <section className='bg-gradient-to-br bg-darkbg flex flex-col pb-4 h-auto w-full min-h-screen'>
+      <div className="w-full md:pt-4 md:pl-5 pt-4">
+    <div className="text-slate-200 w-[400px] md:pl-32 flex flex-col items-center md:items-start md:justify-center">
+      <h1 className="text-center md:text-left md:text-4xl text-2xl font-bold">Overview</h1>
+      <p className="text-center md:text-left text-[10px] md:text-lg text-gray-400 mt-2">{today}</p>
+    </div>
+  </div>
       
       <SummaryCards />
-      <div className='w-full mb-3  flex flex-row items-center justify-center'>
+      <div className='w-full mb-3  flex md:flex-row flex-col items-center justify-center'>
       <LineChart/>
       <BarChart />
       </div>

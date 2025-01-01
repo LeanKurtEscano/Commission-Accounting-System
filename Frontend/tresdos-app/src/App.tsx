@@ -18,6 +18,7 @@ import Otp from './sections/Otp';
 import TrackingDetails from './layouts/TrackingDetails';
 import ManageAgents from './sections/ManageAgents';
 import ResetPassword from './sections/ResetPassword';
+import AgentsSummary from './sections/AgentsSummary';
 function App() {
   return (
     <MyProvider>
@@ -77,6 +78,7 @@ const Main = () => {
           <Route path="tracking" element={<Tracking />} />
           <Route path='tracking/:reportId' element={ <TrackingDetails />}/>
           <Route path="manage-agent" element={<ManageAgents />} />
+          <Route path="agents-summary" element={<AgentsSummary />} />
           
         </Route>
 

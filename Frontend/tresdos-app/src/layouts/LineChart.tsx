@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-// Registering the required Chart.js components
+
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 import { months } from '../constants';
+import { getWeekly } from '../services/dashboard';
 interface ChartData {
   week1?: number;
   week2?: number;
@@ -29,44 +30,25 @@ const LineChart: React.FC = () => {
 
   // State for the dropdown visibility
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  
 
+  const handleWeekly = async() => {
+    const response = await getWeekly(selectedMonth);
+
+    if(response.status === 200) {
+      setData(response.data);
+     
+    }
+  }
   useEffect(() => {
-    // Fetch data based on the selected month
-    const fetchData = (month: string) => {
-      // Replace with actual API data fetching logic
-      const mockData = {
-        January: {
-          week1: 5000,
-          week2: 6500,
-          week3: 7000,
-          // Week 4 data may be missing
-        },
-        February: {
-          week1: 4800,
-          week2: 5300,
-          week3: 5800,
-          week4: 6000,
-        },
-
-        March: {
-            week1: 5000,
-            week2: 6500,
-            week3: 7000,
-            // Week 4 data may be missing
-          },
-        // Add more months as needed
-      };
-
-      setData(mockData[month] || {});
-    };
-
-    // Fetch data when the selected month changes
-    fetchData(selectedMonth);
+   
+    handleWeekly();
+  
   }, [selectedMonth]);
 
-  // Prepare chart data dynamically based on available data
+  
   const chartData = {
-    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'], // X-axis labels (weeks)
+    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'], 
     datasets: [
       {
         label: 'Total Earnings', // Line label
@@ -75,24 +57,22 @@ const LineChart: React.FC = () => {
           data.week2 ?? 0,
           data.week3 ?? 0,
           data.week4 ?? 0,
-        ], // Y-axis data (weeks' earnings)
-        borderColor: 'rgba(138, 110, 214, 1)', // Solid border color
-        backgroundColor: 'rgba(138, 110, 214, 0.2)', // Transparent fill
-        fill: false, // Don't fill under the line
-        tension: 0.4, // Smooth line
+        ], 
+        borderColor: 'rgba(138, 110, 214, 1)', 
+        backgroundColor: 'rgba(138, 110, 214, 0.2)', 
+        fill: false, 
+        tension: 0.4, 
       },
     ],
   };
 
-  // Toggle dropdown visibility
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  // Select month from dropdown
   const handleMonthSelect = (month: string) => {
     setSelectedMonth(month);
-    setIsDropdownOpen(false); // Close dropdown after selection
+    setIsDropdownOpen(false); 
   };
 
   return (

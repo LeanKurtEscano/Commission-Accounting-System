@@ -13,6 +13,20 @@ export const validateAgentName = (name: string): string | null => {
     return null;  // Return null if no errors
 };
 
+export const validateNumberInput = (value: string): string | null => {
+  // Regular expression to match a valid number (allowing for decimals)
+  const numberPattern = /^[0-9]+(\.[0-9]{1,2})?$/;
+
+  // Check if the value matches the number pattern
+  if (!numberPattern.test(value)) {
+    return "Invalid input. Only numbers are allowed, up to two decimal places.";
+  }
+
+  // If valid, return null (no error)
+  return null;
+};
+
+
 export const validateNumber = (value: any): string => {
    
     

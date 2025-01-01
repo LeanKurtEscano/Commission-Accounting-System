@@ -146,3 +146,5 @@ export const deleteAgent = async(id:number, agentType: string) => {
     return response
 
 }
+
+

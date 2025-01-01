@@ -41,6 +41,8 @@ class ReportDate(models.Model):
 class AgentIncomeReport(models.Model):
     report_date = models.ForeignKey(ReportDate, on_delete=models.CASCADE)
     agent_name = models.CharField(max_length=100)
+    agent_id = models.IntegerField(null=True, blank=True)
+
     agent_role = models.CharField(max_length=50)  # e.g., 'head_agent', 'mid_agent', 'base_agent'
     total_amount = models.DecimalField(max_digits=12, decimal_places=2)  # Total input amount
     percentage = models.IntegerField()  # Agent's percentage

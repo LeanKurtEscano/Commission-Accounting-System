@@ -22,7 +22,7 @@ const BarChart: React.FC = () => {
       try {
         const response = await getTotalSum(endPoint); 
         if (response.status === 200) {
-          console.log(response.data);
+         
           setAgentData(response.data); 
         }
       } catch (error) {

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import React from "react";
+import { formatNumberWithCommas } from "../utils/formatNumbers";
 export interface ReportDetails {
   id: number;
   agent_name: string;
@@ -42,13 +41,13 @@ const ReportTable: React.FC<UserDataArray> = ({ data }) => {
                 <td className="px-1 py-1 md:px-3 md:py-2">{item.agent_name}</td>
                 <td className="px-1 py-1 md:px-3 md:py-2">{item.agent_role} </td>
                 <td className="px-1 py-1 md:px-3 md:py-2">
-                  {item.total_amount}
+                ₱{formatNumberWithCommas(item.total_amount)}
                 </td>
                 <td className="px-1 py-1 md:px-3 md:py-2">{item.percentage}%</td>
                 <td className="px-1 py-1 md:px-3 md:py-2">
                   {item.parent_percentage}%
                 </td>
-                <td className="px-1 py-1 md:px-3 md:py-2">{item.income}</td>
+                <td className="px-1 py-1 md:px-3 md:py-2">₱{formatNumberWithCommas(item.income)}</td>
               </tr>
             ))
           ) : (

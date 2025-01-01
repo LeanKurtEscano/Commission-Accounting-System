@@ -1,5 +1,6 @@
 import { AgentData } from "../services/agents";
 import { ReportDetails } from "../layouts/TrackingDetails";
+import { AgentSummary } from "../sections/AgentsSummary";
 export const sortAgentsByName = (data: AgentData[]): AgentData[] => {
     return data.map((headAgent) => ({
       ...headAgent,
@@ -17,4 +18,8 @@ export const sortAgentsByName = (data: AgentData[]): AgentData[] => {
 
 export const sortAgentsByIncome = (data: ReportDetails[]): ReportDetails[] => {
   return data.sort((a,b) => b.income - a.income );
+}
+
+export const sortAgentsByIncomeSummary = (data: AgentSummary[]): AgentSummary[] => {
+  return data.sort((a,b) => b.totalAmount - a.totalAmount );
 }

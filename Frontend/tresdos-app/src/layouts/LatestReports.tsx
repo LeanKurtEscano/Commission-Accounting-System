@@ -1,7 +1,8 @@
 import React, { useState,useEffect } from 'react';
 import { getTotalSum } from '../services/dashboard';
 import { Interaction } from 'chart.js';
-
+import { formatNumberWithCommas } from '../utils/formatNumbers';
+formatNumberWithCommas
 interface TrackingData {
   report_date__start_date : string;
   report_date__end_date: string;
@@ -20,7 +21,7 @@ const LatestReports:React.FC = () => {
       try {
         const response = await getTotalSum(endPoint); 
         if (response.status === 200) {
-          console.log(response.data);
+       
           setReportsData(response.data); // Update state with the API response data
         }
       } catch (error) {
@@ -55,8 +56,8 @@ const LatestReports:React.FC = () => {
                 <tr key={index} className="hover:bg-gray-700">
                   <td className="text-white px-4 py-2 text-center border-b-2" style={{ borderColor: 'rgba(169, 169, 169, 0.2)' }}>{report.report_date__start_date}</td>
                   <td className="text-white px-4 py-2 text-center border-b-2" style={{ borderColor: 'rgba(169, 169, 169, 0.2)' }}>{report.report_date__end_date}</td>
-                  <td className="text-green-400 px-4 py-2 text-center border-b-2" style={{ borderColor: 'rgba(169, 169, 169, 0.2)' }}>₱{report.total_sum}</td>
-                  <td className="text-white px-4 py-2 text-center border-b-2" style={{ borderColor: 'rgba(169, 169, 169, 0.2)' }}>₱{report.revenue}</td>
+                  <td className="text-green-400 px-4 py-2 text-center border-b-2" style={{ borderColor: 'rgba(169, 169, 169, 0.2)' }}>₱{formatNumberWithCommas(report.total_sum)}</td>
+                  <td className="text-white px-4 py-2 text-center border-b-2" style={{ borderColor: 'rgba(169, 169, 169, 0.2)' }}>₱{formatNumberWithCommas(report.revenue)}</td>
                 </tr>
               ))}
             </tbody>

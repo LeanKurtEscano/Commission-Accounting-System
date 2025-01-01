@@ -16,7 +16,7 @@ const SideBar: React.FC = () => {
   };
 
   const navigate = useNavigate();
-  const { userDetails, setToggleLog } = useMyContext();
+  const { setToggleLog } = useMyContext();
 
   const toUserProfile = () => {
     navigate('/dashboard/analytics');
@@ -24,7 +24,7 @@ const SideBar: React.FC = () => {
   };
 
   const handleMenuClick = (index: number) => {
-    if (index === 4) {
+    if (index === 5) {
       const savedPath = localStorage.getItem('currentPath');
       if (savedPath) {
         navigate(savedPath);

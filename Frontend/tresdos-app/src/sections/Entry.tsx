@@ -3,7 +3,9 @@ import { sortAgentsByName } from "../utils/sortAgents";
 import { getAgentsJson, AgentData } from "../services/agents";
 import { handleKeyDown } from "../utils/keyFunction";
 import { makeReport } from "../services/agents";
+import { formatNumberInput } from "../utils/formatNumbers";
 import Notification from '../components/Notification'
+import { validateNumberInput } from "../constants/validation";
 interface CommissionData {
   id: number;
   name: string;
@@ -26,6 +28,7 @@ const Entry = () => {
     endDate: '',
   })
   const [formData, setFormData] = useState<CommissionData[]>([]);
+
   const message = "Report is created."
 
   const inputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
@@ -52,34 +55,45 @@ const Entry = () => {
     parentId: number | null
   ) => {
     const { name, value } = e.target;
-
-    const updatedData = {
+  
+    
+    const formattedNumber = formatNumberInput(value);
+  
+    // If the formatted number is null or empty, remove the agent data from the array
+    if (formattedNumber === null || formattedNumber === 0) {
+      setFormData((prevData) => {
+        // Filter out the entry where the agent ID and type match
+        return prevData.filter((item) => item.id !== agentId || item.type !== agentType);
+      });
+      return;
+    }
+  
+    
+    const updatedData: CommissionData = {
       id: agentId,
       name: agentName,
       type: agentType,
-      commission: parseFloat(value),
+      commission: formattedNumber, 
       parentId: parentId,
     };
-
+  
+   
     setFormData((prevData) => {
-      // Find the index using both `id` and `type` to uniquely identify the agent
       const existingIndex = prevData.findIndex(
         (item) => item.id === agentId && item.type === agentType
       );
-
+  
       if (existingIndex !== -1) {
-
         const updatedFormData = [...prevData];
         updatedFormData[existingIndex] = updatedData;
         return updatedFormData;
       } else {
-        // If the agent does not exist, append the new agent data
         return [...prevData, updatedData];
       }
     });
   };
-
-
+  
+ console.log(formData);
 
   const handleAgentsData = async () => {
     try {
@@ -186,7 +200,7 @@ const Entry = () => {
                 </div>
                 <div className="flex flex-col items-end">
                   <input
-                    type="number"
+                    type="text"
                     onChange={(e) =>
                       handleInputChange(e, "headAgent", head.name, head.id, null)
                     }
@@ -203,6 +217,7 @@ const Entry = () => {
                     ref={(el) => (inputRefs.current["headAgent" + head.id] = el)}
                     className="p-2 rounded-md bg-darkbg text-slate-100 border border-textHeading focus:outline-none focus:ring focus:ring-textHeading"
                   />
+                  
                 </div>
               </div>
               <div className="mt-4 space-y-4">
@@ -227,7 +242,7 @@ const Entry = () => {
                         </div>
                         <div className="flex flex-col items-end">
                           <input
-                            type="number"
+                            type="text"
                             onChange={(e) =>
                               handleInputChange(e, "middleAgent", middle.name, middle.id, head.id)
                             }
@@ -271,7 +286,7 @@ const Entry = () => {
 
                               <div className="flex flex-col items-end">
                                 <input
-                                  type="number"
+                                  type="text"
                                   onChange={(e) =>
                                     handleInputChange(e, "baseAgent", base.name, base.id, middle.id)
                                   }
@@ -310,9 +325,9 @@ const Entry = () => {
 
 
           <div className=" w-[300px] flex items-center justify-center">
-            <button disabled={reportDate.startDate === '' || reportDate.endDate === ''}  className={`mt-4 px-4 py-2 rounded w-full transform transition duration-300 ease-in-out ${formData.length === 0
+            <button disabled={reportDate.startDate === '' || reportDate.endDate === '' || formData.length === 0 }  className={`mt-4 px-4 py-2 rounded w-full transform transition duration-300 ease-in-out ${formData.length === 0
                     ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                    : 'bg-textHeading text-white hover:scale-105 focus:ring-2 focus:ring-textHeading'
+                    : 'bg-textHeading text-white cursor-pointer hover:scale-105 focus:ring-2 focus:ring-textHeading'
                   }`} type="submit">Create</button>
           </div>
         </div>
